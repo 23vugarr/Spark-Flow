@@ -1,0 +1,13 @@
+*.log
+dist
+.venv
+.venv/*
+.ropeproject
+__pycache__
+*.pyc
+__pycache__/*
+**/__pycache__/*
+dist
+dist/*
+poetry.lock
+config.yml
