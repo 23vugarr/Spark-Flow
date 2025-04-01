@@ -1,4 +1,5 @@
-from sparkscr.core.QueryBuilder import QueryBuilder
+from sparkflow.core.QueryBuilder import QueryBuilder
+
 
 qbuilder = QueryBuilder("./tests")
 
