@@ -13,7 +13,6 @@ class SparkManager:
         for key, val in spark_conf.config.items():
             master_spark_conf.set(key, str(val))
 
-        print(master_spark_conf)
         self.spark: SparkSession = (
             SparkSession.builder.master(spark_conf.masterUrl)
             .config(conf=master_spark_conf)

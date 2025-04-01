@@ -48,7 +48,7 @@ class AppManager:
 
     def register_pipelines_as_tables(self):
         for query in self.execution_order:
-            print(query)
+            logger.info("Parsed query: {}".format(query))
             self.spark_manager.register_spark_table(
                 query, self.transform_queries[f"{query}.sql"].query
             )
@@ -130,10 +130,9 @@ class AppManager:
                         transformation.query_config.branch,
                     )
 
-                    print(
-                        "PIPELINE DONE: ",
-                        transformation.query_config.target_schema,
-                        table,
+                    logger.info(
+                        "Pipeline done: {}, {}".format(
+                        transformation.query_config.target_schema, table)
                     )
                 elif transformation.query_config.type == SourceType.JDBC:
                     # not done
@@ -151,10 +150,17 @@ class AppManager:
         if pipeline.query_config.type == SourceType.JDBC:
             self.spark_manager.load_to_jdbc()
 
-    def reload_files(self): ...
+    def reload_files(self):
+        self.source_list: dict = {}
+        self.transform_queries: Dict[str, QuerySchema] = (
+            {}
+        ) 
+        self.execution_order: List[str] = (
+            list()
+        )  
 
     def show_execution_graph(self):
-        print(self.execution_order)
+        logger.info("Execution order: {}".format(self.execution_order))
 
     def get_data_lineage(self):
         data_lineage = {}
