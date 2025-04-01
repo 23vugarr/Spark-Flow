@@ -1,12 +1,13 @@
 from pydantic import BaseModel
 from typing import List, Optional
+from .Enum import Materialization, SourceType, TableMaterializationStrategies
 
 class QueryConfig(BaseModel):
-    materialization: str
+    materialization: Materialization 
     pipeline_name: str
     target_schema: str
-    type: str
-    strategy: str
+    type: SourceType 
+    strategy: TableMaterializationStrategies
     merge_keys: List[str]
     branch: Optional[str]
 

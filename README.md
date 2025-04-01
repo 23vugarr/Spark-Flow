@@ -142,7 +142,7 @@ from
 ```
 project/
 │
-├── sparkscr
+├── sparkflow
 │   ├── schemas
 │   │   ├── QuerySchema.py
 │   │   ├── Enum.py
@@ -213,7 +213,7 @@ The application automatically detects dependencies between transformations using
 To run the application, use the following code:
 
 ```python
-from sparkscr.core.AppManager import AppManager
+from sparkflow.core.AppManager import AppManager
 
 app = AppManager(
     models_dir="./models",

@@ -18,7 +18,7 @@ class JDBCSource(BaseModel):
 class HiveSource(BaseModel):
     type: SourceType = Field(default=SourceType.HIVE)
     name: str = "lake"
-    tableName: str = "table_name"
+    table: str = "table_name"
 
 Source = Union[JDBCSource, HiveSource]
 

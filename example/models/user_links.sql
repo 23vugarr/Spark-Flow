@@ -16,7 +16,8 @@ select
     l.title,
     l.type,
     l.provider,
-    l.is_active
+    l.is_active,
+    now() as load_date
 from
     {{ source_table("users") }} u
 left join

@@ -29,7 +29,7 @@ class AppManager:
         self.models_dir = models_dir
         self.execution_order: List[str] = (
             list()
-        )  #  tuple of (filename, (sql, dependencies))
+        )  
 
         self.data_linage_visualizer = DataLineageVisualizer()
 
@@ -75,9 +75,9 @@ class AppManager:
             dependencies = pipe.dependencies
             dependency_map[pipeline_name] = dependencies
 
-        print("dependency map: ", dependency_map)
+        logger.info("Dependency map: ", dependency_map)
         self.execution_order = self._topological_sort(dependency_map)
-        print(self.execution_order)
+        logger.info("Execution order: {}".format(self.execution_order))
 
     def _topological_sort(self, dependency_map):
         # https://www.geeksforgeeks.org/topological-sorting/
@@ -124,7 +124,7 @@ class AppManager:
                     )
                     self.spark_manager.load_to_hive(
                         pipe_name,
-                        table.tableName,
+                        table.table,
                         transformation.query_config.strategy,
                         transformation.query_config.merge_keys,
                         transformation.query_config.branch,
