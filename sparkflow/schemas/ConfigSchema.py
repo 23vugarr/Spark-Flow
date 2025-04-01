@@ -23,7 +23,7 @@ class HiveSource(BaseModel):
 Source = Union[JDBCSource, HiveSource]
 
 class ConfigModel(BaseModel):
-    appName: str = "spark flow app"
+    appName: str = "sparkflow app"
     sparkConf: SparkConf = SparkConf()
     sources: List[Source] = Field(default_factory=lambda: [
         JDBCSource(table="public.my_table", url="jdbc:postgresql://localhost:5432/mydb"),

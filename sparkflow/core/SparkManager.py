@@ -4,6 +4,7 @@ from sparkflow.schemas.ConfigSchema import Source
 from pyspark.conf import SparkConf
 from sparkflow.schemas.Enum import TableMaterializationStrategies
 from typing import List, Optional
+from sparkflow.logging_conf import logger
 
 
 class SparkManager:
@@ -50,33 +51,18 @@ class SparkManager:
     ):
         # not done
         df_temp = self.spark.table(transformation_name)
-        print("STARTING LOAD>.....")
+        logger.info("Loading to jdbc table {}".format(transformation_name))
 
         properties = {
             "user": str(trasform_target.username),
             "password": trasform_target.password.get_secret_value(),
         }
+
         if trasform_target.options:
             for key, value in trasform_target.options.items():
                 properties[key] = value
 
-        if strategy == TableMaterializationStrategies.OVERWRITE:
-            df_temp.write.format("jdbc").option("url", trasform_target.url).option(
-                "dbtable", trasform_target.table
-            ).option("user", trasform_target.username).option(
-                "password", trasform_target.password.get_secret_value()
-            ).option("driver", properties['driver']).mode(
-                "overwrite"
-            ).save()
-
-        elif strategy == TableMaterializationStrategies.APPEND:
-            df_temp.write.format("jdbc").option("url", trasform_target.url).option(
-                "dbtable", trasform_target.table
-            ).option("user", trasform_target.username).option(
-                "password", trasform_target.password.get_secret_value()
-            ).mode(
-                "append"
-            ).save()
+        df_temp.write.mode(strategy).jdbc(trasform_target.url, trasform_target.table, properties=properties)
         
 
     def load_to_hive(
@@ -88,7 +74,7 @@ class SparkManager:
         branch: Optional[str] = None,
     ):
         df_temp = self.spark.table(transformation_name)
-        print("STARTING LOAD>.....")
+        logger.info("Loading into hive table {}".format(transformation_name))
 
         if branch is not None:
             branch_exists = False
