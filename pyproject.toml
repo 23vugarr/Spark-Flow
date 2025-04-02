@@ -1,9 +1,12 @@
 [tool.poetry]
-name = "sparkflow"
+name = "pyspark-flow"
 version = "0.1.0"
 description = ""
 authors = ["Vugar Abdulali <vabdulaliyev@gmail.com>"]
 readme = "README.md"
+packages = [
+    {include = "sparkflow"}
+]
 
 [tool.poetry.dependencies]
 python = ">=3.10"
