@@ -43,6 +43,10 @@ class AppManager:
                 self.source_list[source.name] = self.spark_manager.register_hive_table(
                     source
                 )
+            elif source.type == SourceType.S3:
+                self.source_list[source.name] = self.spark_manager.register_s3_table(
+                    source
+                )
             else:
                 continue
 

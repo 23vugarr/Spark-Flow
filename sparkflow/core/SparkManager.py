@@ -25,6 +25,19 @@ class SparkManager:
         self.spark.conf.set(key, value)
         print(f"Set Spark configuration: {key} = {value}")
 
+    def register_s3_table(self, source: Source):
+        if source.fileType == "parquet":
+            df = self.spark.read.parquet(source.folderPath)
+        elif source.fileType == "csv":
+            df = self.spark.read.csv(source.folderPath, header=True, inferSchema=True)
+        elif source.fileType == "json":
+            df = self.spark.read.json(source.folderPath)
+        else:
+            raise ValueError(f"Unsupported file type: {source.fileType}")
+
+        df.createOrReplaceTempView(source.name)
+        return df
+
     def register_jdbc_table(self, source: Source):
         properties = {
             "user": str(source.username),

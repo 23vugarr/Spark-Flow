@@ -3,6 +3,7 @@ from enum import Enum
 class SourceType(str, Enum):
     JDBC = 'jdbc'
     HIVE = 'hive'
+    S3 = 's3'
 
 class Materialization(str, Enum):
     TABLE = "table"

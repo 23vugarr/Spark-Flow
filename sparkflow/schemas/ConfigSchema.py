@@ -20,6 +20,12 @@ class HiveSource(BaseModel):
     name: str = "lake"
     table: str = "table_name"
 
+class S3Source(BaseModel):
+    type: SourceType = Field(default=SourceType.S3)
+    name: str = "s3"
+    fileType: str
+    folderPath: str
+
 Source = Union[JDBCSource, HiveSource]
 
 class ConfigModel(BaseModel):
@@ -27,7 +33,8 @@ class ConfigModel(BaseModel):
     sparkConf: SparkConf = SparkConf()
     sources: List[Source] = Field(default_factory=lambda: [
         JDBCSource(table="public.my_table", url="jdbc:postgresql://localhost:5432/mydb"),
-        HiveSource()
+        HiveSource(),
+        S3Source(fileType="parquet", folderPath="s3://my-bucket/my-folder/")
     ])
 
     def get_sources_by_type(self, source_type: SourceType) -> List[Source]:
