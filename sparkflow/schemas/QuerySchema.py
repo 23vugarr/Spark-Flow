@@ -6,8 +6,8 @@ class QueryConfig(BaseModel):
     materialization: Materialization 
     pipeline_name: str
     target_schema: str
-    type: SourceType 
-    strategy: TableMaterializationStrategies
+    type: Optional[SourceType] 
+    strategy: Optional[TableMaterializationStrategies]
     merge_keys: List[str]
     branch: Optional[str]
 

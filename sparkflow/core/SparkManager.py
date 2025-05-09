@@ -137,7 +137,7 @@ class SparkManager:
     def create_temp_view(self): ...
 
     def register_hive_table(self, source: Source):
-        df = self.spark.sql(f"SELECT * FROM {source.tableName}")
+        df = self.spark.sql(f"SELECT * FROM {source.table}")
         df.createOrReplaceTempView(source.name)
 
     def register_spark_table(self, name, query_sql):

@@ -26,7 +26,7 @@ class S3Source(BaseModel):
     fileType: str
     folderPath: str
 
-Source = Union[JDBCSource, HiveSource]
+Source = Union[JDBCSource, HiveSource, S3Source]
 
 class ConfigModel(BaseModel):
     appName: str = "sparkflow app"
